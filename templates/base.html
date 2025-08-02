@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Mi App Financiera{% endblock %}</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+  />
+
+  <!-- Estilos adicionales para sidebar y resaltado -->
+  <style>
+    .sidebar {
+      min-height: 100vh;
+      background-color: #ffffff;
+      border-right: 1px solid #e0e0e0;
+    }
+    .sidebar .nav-link.active {
+      background-color: #f8f9fa;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body class="bg-light">
+  {% if session.get("user_id") %}
+    <!-- Navbar Superior -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('dashboard') }}">
+          <i class="bi bi-currency-dollar"></i> Mi App Financiera
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarTop"
+          aria-controls="navbarTop"
+          aria-expanded="false"
+          aria-label="Alternar navegación"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTop">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('logout') }}">
+                <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  {% endif %}
+
+  <div class="container-fluid">
+    <div class="row g-0">
+      {% if session.get("user_id") %}
+        <!-- Sidebar Lateral -->
+        <nav class="col-12 col-md-3 col-lg-2 sidebar px-0">
+          <ul class="nav flex-column pt-4">
+            <li class="nav-item mb-1">
+              <a
+                class="nav-link d-flex align-items-center px-3 {% if request.endpoint == 'dashboard' %}active{% endif %}"
+                href="{{ url_for('dashboard') }}"
+              >
+                <i class="bi bi-speedometer2 me-2"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item mb-1">
+              <a
+                class="nav-link d-flex align-items-center px-3 {% if request.endpoint.startswith('listar_gastos') or request.endpoint.startswith('gastos_') %}active{% endif %}"
+                href="{{ url_for('listar_gastos') }}"
+              >
+                <i class="bi bi-credit-card me-2"></i>
+                <span>Gastos</span>
+              </a>
+            </li>
+            <li class="nav-item mb-1">
+              <a
+                class="nav-link d-flex align-items-center px-3 {% if request.endpoint.startswith('listar_ingresos') or request.endpoint.startswith('ingresos_') %}active{% endif %}"
+                href="{{ url_for('listar_ingresos') }}"
+              >
+                <i class="bi bi-wallet2 me-2"></i>
+                <span>Ingresos</span>
+              </a>
+            </li>
+            <li class="nav-item mb-1">
+              <a
+                class="nav-link d-flex align-items-center px-3 {% if request.endpoint.startswith('listar_categorias') or request.endpoint.startswith('categorias_') %}active{% endif %}"
+                href="{{ url_for('listar_categorias') }}"
+              >
+                <i class="bi bi-list-ul me-2"></i>
+                <span>Categorías</span>
+              </a>
+            </li>
+            <li class="nav-item mb-1">
+              <a
+                class="nav-link d-flex align-items-center px-3 {% if request.endpoint.startswith('listar_etiquetas') or request.endpoint.startswith('etiquetas_') %}active{% endif %}"
+                href="{{ url_for('listar_etiquetas') }}"
+              >
+                <i class="bi bi-tags me-2"></i>
+                <span>Etiquetas</span>
+              </a>
+            </li>
+            <li class="nav-item mb-1">
+              <a
+                class="nav-link d-flex align-items-center px-3 {% if request.endpoint.startswith('listar_presupuestos') or request.endpoint.startswith('presupuestos_') %}active{% endif %}"
+                href="{{ url_for('listar_presupuestos') }}"
+              >
+                <i class="bi bi-piggy-bank me-2"></i>
+                <span>Presupuestos</span>
+              </a>
+            </li>
+            <li class="nav-item mb-1">
+              <a
+                class="nav-link d-flex align-items-center px-3 {% if request.endpoint.startswith('listar_archivos') or request.endpoint.startswith('archivos_') %}active{% endif %}"
+                href="{{ url_for('listar_gastos') }}"
+              >
+                <i class="bi bi-paperclip me-2"></i>
+                <span>Archivos</span>
+              </a>
+              {# Si necesitas pasar un gasto_id:
+                 href="{{ url_for('listar_archivos', gasto_id=1) }}" #}
+            </li>
+          </ul>
+        </nav>
+      {% endif %}
+
+      <!-- Contenido Principal -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-4 py-4">
+        <!-- Mensajes flash -->
+        {% with mensajes = get_flashed_messages(with_categories=true) %}
+          {% if mensajes %}
+            <div class="row mb-3">
+              <div class="col-12">
+                {% for categoria, texto in mensajes %}
+                  <div
+                    class="alert alert-{{ categoria }} alert-dismissible fade show"
+                    role="alert"
+                  >
+                    {{ texto }}
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Cerrar"
+                    ></button>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        {% block content %}
+        <!-- Aquí va el contenido específico de cada página -->
+        {% endblock %}
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer mt-5 py-3 bg-light">
+    <div class="container text-center">
+      <span class="text-muted">&copy; {{ current_year or "2025" }} Mi App Financiera</span>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS Bundle v5.3 -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  ></script>
+</body>
+</html>

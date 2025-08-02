@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Gastos{% endblock %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Gastos</h2>
+    <a href="{{ url_for('crear_gasto') }}" class="btn btn-success">
+      <i class="bi bi-plus-circle"></i> Nuevo Gasto
+    </a>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-secondary">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Categoría</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Monto</th>
+          <th scope="col" class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for gasto in gastos %}
+          <tr>
+            <th scope="row">{{ gasto[0] }}</th>
+            <td>{{ gasto[1] }}</td>
+            <td>{{ gasto[2] or "—" }}</td>
+            <td>{{ gasto[3] or "" }}</td>
+            <td>{{ gasto[4] }}</td>
+            <td class="text-center">
+              <a href="{{ url_for('editar_gasto', id=gasto[0]) }}" class="btn btn-sm btn-warning me-1">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <form
+                action="{{ url_for('eliminar_gasto', id=gasto[0]) }}"
+                method="POST"
+                class="d-inline"
+                onsubmit="return confirm('¿Eliminar este gasto?');"
+              >
+                <button type="submit" class="btn btn-sm btn-danger me-1">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+              <a
+                href="{{ url_for('listar_archivos', gasto_id=gasto[0]) }}"
+                class="btn btn-sm btn-info"
+                title="Archivos"
+              >
+                <i class="bi bi-paperclip"></i>
+              </a>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="6" class="text-center">No hay gastos registrados.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

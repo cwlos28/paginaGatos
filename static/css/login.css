@@ -1,0 +1,239 @@
+/* ================================================================
+   IMPORTACIÓN DE FUENTES
+================================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* ================================================================
+   RESET & BOX-SIZING
+================================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ================================================================
+   VARIABLES: PALETA DE COLORES Y TIPOGRAFÍA
+================================================================ */
+:root {
+  --color-primary: #4285F4;
+  --color-primary-hover: #3367D6;
+  --color-secondary: #DB4437;
+  --color-background: #f0f2f5;
+  --color-surface: #ffffff;
+  --color-on-surface: #202124;
+  --color-on-primary: #ffffff;
+  --color-divider: #e0e0e0;
+  --color-input-border: #dadce0;
+  --color-input-focus: #4285F4;
+  --color-alert-success: #34A853;
+  --color-alert-danger: #EA4335;
+
+  --font-family-sans: 'Roboto', sans-serif;
+  --font-size-base: 1rem;
+  --font-size-h4: 1.5rem;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-input: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-button: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ================================================================
+   ESTILOS GLOBALES
+================================================================ */
+html {
+  font-size: 16px;
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-on-surface);
+  background-color: var(--color-background);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    135deg,
+    rgba(66, 133, 244, 0.05) 0%,
+    rgba(219, 68, 55, 0.05) 50%,
+    rgba(244, 180, 0, 0.05) 100%
+  );
+  animation: rotateBg 20s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+@keyframes rotateBg {
+  from {
+    transform: rotate(0deg) scale(1.1);
+  }
+  to {
+    transform: rotate(360deg) scale(1.1);
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+.d-grid {
+  margin-top: 20px;
+  display: grid;
+  place-items: center;
+}
+
+.card {
+  background-color: var(--color-surface);
+  border: none;
+  border-radius: 14px;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transform: translateY(30px);
+  opacity: 0;
+  animation: fadeInUp 0.9s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.card-header {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.card-header h4 {
+  margin: 0;
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-on-primary);
+  letter-spacing: 0.5px;
+}
+
+.card-body {
+  padding: 2.25rem 1.75rem;
+}
+
+.alert {
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: var(--font-weight-medium);
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-input);
+}
+
+.alert-success {
+  background-color: var(--color-alert-success);
+  color: var(--color-on-primary);
+  border: none;
+}
+
+.alert-danger {
+  background-color: var(--color-alert-danger);
+  color: var(--color-on-primary);
+  border: none;
+}
+
+.btn-close {
+  filter: brightness(0.85);
+  transition: filter 0.2s ease;
+}
+
+.btn-close:hover {
+  filter: brightness(1);
+}
+
+.form-label {
+  font-size: 0.9rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-on-surface);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-on-surface);
+  background-color: #fafafa;
+  border: 1px solid var(--color-input-border);
+  border-radius: 10px;
+  box-shadow: var(--shadow-input);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-input-focus);
+  box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3);
+  background-color: #ffffff;
+}
+
+.btn-primary {
+  background-color: var(--color-primary) !important;
+  border: none !important;
+  font-size: 1rem;
+  font-weight: var(--font-weight-medium);
+  padding: 0.75rem;
+  border-radius: 10px;
+  box-shadow: var(--shadow-button);
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-button);
+}
+
+.grupo-password {
+ margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .card {
+    margin: 0 1rem;
+  }
+}
+
+.row.justify-content-center {
+  min-height: 80vh;
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .mt-5 {
+    margin-top: 4rem !important;
+  }
+}

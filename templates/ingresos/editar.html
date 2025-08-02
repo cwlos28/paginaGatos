@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Ingreso{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-warning text-white">
+          <h5 class="mb-0">Editar Ingreso #{{ ingreso[0] }}</h5>
+        </div>
+        <div class="card-body">
+          <form action="{{ url_for('editar_ingreso', id=ingreso[0]) }}" method="POST">
+            <div class="mb-3">
+              <label for="descripcion" class="form-label">Descripción (opcional)</label>
+              <textarea
+                class="form-control"
+                id="descripcion"
+                name="descripcion"
+                maxlength="255"
+                rows="2"
+              >{{ ingreso[1] or "" }}</textarea>
+            </div>
+            <div class="mb-3">
+              <label for="monto" class="form-label">Monto</label>
+              <input
+                type="number"
+                class="form-control"
+                id="monto"
+                name="monto"
+                required
+                step="0.01"
+                min="0"
+                value="{{ ingreso[2] }}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="fecha" class="form-label">Fecha</label>
+              <input
+                type="date"
+                class="form-control"
+                id="fecha"
+                name="fecha"
+                required
+                value="{{ ingreso[3] }}"
+              />
+            </div>
+            <div class="d-flex justify-content-end">
+              <a href="{{ url_for('listar_ingresos') }}" class="btn btn-secondary me-2">Cancelar</a>
+              <button type="submit" class="btn btn-warning">Actualizar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

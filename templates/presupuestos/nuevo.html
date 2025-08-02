@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Nuevo Presupuesto{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0">Crear Nuevo Presupuesto</h5>
+        </div>
+        <div class="card-body">
+          <form action="{{ url_for('crear_presupuesto') }}" method="POST">
+            <div class="mb-3">
+              <label for="categoria" class="form-label">Categoría</label>
+              <select class="form-select" name="categoria" id="categoria" required>
+                <option value="" disabled selected>-- Selecciona una categoría --</option>
+                {% for cat in categorias %}
+                  <option value="{{ cat[0] }}">{{ cat[1] }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="monto_limite" class="form-label">Monto Límite</label>
+              <input
+                type="number"
+                class="form-control"
+                id="monto_limite"
+                name="monto_limite"
+                required
+                step="0.01"
+                min="0"
+              />
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="mes" class="form-label">Mes</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="mes"
+                  name="mes"
+                  required
+                  min="1"
+                  max="12"
+                />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="anio" class="form-label">Año</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="anio"
+                  name="anio"
+                  required
+                  min="2000"
+                />
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <a href="{{ url_for('listar_presupuestos') }}" class="btn btn-secondary me-2">Cancelar</a>
+              <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

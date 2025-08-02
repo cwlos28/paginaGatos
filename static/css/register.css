@@ -1,0 +1,282 @@
+/* ================================================================
+   IMPORTACIÓN DE FUENTES
+   ================================================================ */
+   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+   /* ================================================================
+      RESET & BOX-SIZING
+      ================================================================ */
+   *,
+   *::before,
+   *::after {
+     box-sizing: border-box;
+     margin: 0;
+     padding: 0;
+   }
+   
+   /* ================================================================
+      VARIABLES: PALETA DE COLORES Y TIPOGRAFÍA
+      ================================================================ */
+   :root {
+     /* Colores principales (inspirados en Google Material) */
+     --color-primary: #4285F4;            /* Azul Google */
+     --color-primary-hover: #3367D6;
+     --color-secondary: #DB4437;          /* Rojo Google */
+     --color-background: #F1F3F4;         /* Blanco grisáceo suave */
+     --color-surface: #FFFFFF;            /* Color de tarjetas */
+     --color-on-surface: #202124;         /* Texto oscuro */
+     --color-on-primary: #FFFFFF;         /* Texto en botón primario */
+     --color-divider: #E0E0E0;            /* Líneas divisorias */
+     --color-input-border: #DADCE0;       /* Borde de inputs */
+     --color-input-focus: #4285F4;        /* Borde en foco de inputs */
+     --color-alert-success: #34A853;      /* Verde para alerts de éxito */
+     --color-alert-danger: #EA4335;       /* Rojo para alerts de error */
+   
+     /* Tipografía */
+     --font-family-sans: 'Roboto', sans-serif;
+     --font-size-base: 1rem;              /* 16px */
+     --font-size-h4: 1.5rem;              /* 24px */
+     --font-weight-regular: 400;
+     --font-weight-medium: 500;
+     --font-weight-bold: 700;
+   
+     /* Sombra global */
+     --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
+     --shadow-input: 0 2px 6px rgba(0, 0, 0, 0.08);
+     --shadow-button: 0 3px 8px rgba(0, 0, 0, 0.1);
+   }
+   
+   /* ================================================================
+      ESTILOS GLOBALES
+      ================================================================ */
+   html {
+     font-size: 16px;
+     height: 100%;
+   }
+   
+   body {
+     font-family: var(--font-family-sans);
+     font-size: var(--font-size-base);
+     font-weight: var(--font-weight-regular);
+     color: var(--color-on-surface);
+     background-color: var(--color-background);
+     min-height: 100vh;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     overflow: hidden;
+   }
+   
+   /* Animación de fondo sutil */
+   body::before {
+     content: '';
+     position: absolute;
+     top: -50%;
+     left: -50%;
+     width: 200%;
+     height: 200%;
+     background: linear-gradient(
+       135deg,
+       rgba(66, 133, 244, 0.05) 0%,
+       rgba(219, 68, 55, 0.05) 50%,
+       rgba(244, 180, 0, 0.05) 100%
+     );
+     animation: rotateBg 20s linear infinite;
+     z-index: -1;
+   }
+   
+   @keyframes rotateBg {
+     from {
+       transform: rotate(0deg) scale(1.2);
+     }
+     to {
+       transform: rotate(360deg) scale(1.2);
+     }
+   }
+   
+   /* ================================================================
+      CONTENEDOR PRINCIPAL
+      ================================================================ */
+   .container {
+     position: relative;
+     z-index: 1;
+   }
+   
+   /* ================================================================
+      CARD DE REGISTRO / LOGIN
+      ================================================================ */
+   .card {
+     background-color: var(--color-surface);
+     border: none;
+     border-radius: 12px;
+     box-shadow: var(--shadow-card);
+     overflow: hidden;
+     transform: translateY(20px);
+     opacity: 0;
+     animation: fadeInUp 0.8s ease-out forwards;
+   }
+   
+   /* Animación de aparición */
+   @keyframes fadeInUp {
+     to {
+       transform: translateY(0);
+       opacity: 1;
+     }
+   }
+   
+   .card-header {
+     background-color: var(--color-primary);
+     padding: 1.25rem 1.5rem;
+     text-align: center;
+   }
+   
+   .card-header h4 {
+     margin: 0;
+     font-size: var(--font-size-h4);
+     font-weight: var(--font-weight-medium);
+     color: var(--color-on-primary);
+     letter-spacing: 0.5px;
+   }
+   
+   /* Cuerpo de la tarjeta */
+   .card-body {
+     padding: 2rem 1.5rem;
+   }
+   
+   /* ================================================================
+      ALERTAS PERSONALIZADAS
+      ================================================================ */
+   .alert {
+     border-radius: 6px;
+     font-size: 0.95rem;
+     font-weight: var(--font-weight-medium);
+     margin-bottom: 1.25rem;
+     box-shadow: var(--shadow-input);
+   }
+   
+   .alert-success {
+     background-color: var(--color-alert-success);
+     color: var(--color-on-primary);
+     border: none;
+   }
+   
+   .alert-danger {
+     background-color: var(--color-alert-danger);
+     color: var(--color-on-primary);
+     border: none;
+   }
+   
+   .btn-close {
+     filter: brightness(0.8);
+     transition: filter 0.2s ease;
+   }
+   
+   .btn-close:hover {
+     filter: brightness(1);
+   }
+   
+   /* ================================================================
+      FORMULARIO E INPUTS
+      ================================================================ */
+   .form-label {
+     font-size: 0.9rem;
+     font-weight: var(--font-weight-medium);
+     color: var(--color-on-surface);
+     margin-bottom: 0.5rem;
+     display: block;
+   }
+   
+   .form-control {
+     width: 100%;
+     padding: 0.75rem 1rem;
+     font-size: var(--font-size-base);
+     font-weight: var(--font-weight-regular);
+     color: var(--color-on-surface);
+     background-color: #FAFAFA;
+     border: 1px solid var(--color-input-border);
+     border-radius: 8px;
+     box-shadow: var(--shadow-input);
+     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+   }
+   
+   .form-control:focus {
+     outline: none;
+     border-color: var(--color-input-focus);
+     box-shadow: 0 2px 6px rgba(66, 133, 244, 0.25);
+     background-color: #FFFFFF;
+   }
+   
+   /* ================================================================
+      BOTONES
+      ================================================================ */
+   .btn-primary {
+     background-color: var(--color-primary) !important;
+     border: none !important;
+     font-size: 1rem;
+     font-weight: var(--font-weight-medium);
+     padding: 0.75rem;
+     border-radius: 8px;
+     box-shadow: var(--shadow-button);
+     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+   }
+   
+   .btn-primary:hover {
+     background-color: var(--color-primary-hover) !important;
+     transform: translateY(-1px);
+     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+   }
+   
+   .btn-primary:active {
+     transform: translateY(0);
+     box-shadow: var(--shadow-button);
+   }
+   
+   .btn-secondary {
+     background-color: #555555 !important;
+     border: none !important;
+     font-size: 1rem;
+     font-weight: var(--font-weight-medium);
+     padding: 0.75rem;
+     border-radius: 8px;
+     margin-top: 20px;
+     margin-bottom: 10px;
+     box-shadow: var(--shadow-button);
+     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+   }
+   
+   .btn-secondary:hover {
+     background-color: #444444 !important;
+     transform: translateY(-1px);
+     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+   }
+   
+   .btn-secondary:active {
+     transform: translateY(0);
+     box-shadow: var(--shadow-button);
+   }
+   
+   /* ================================================================
+      ESTILOS RESPONSIVOS
+      ================================================================ */
+   @media (max-width: 768px) {
+     .card {
+       margin: 0 1rem;
+     }
+   }
+   
+   /* ================================================================
+      UTILIDADES ADICIONALES
+      ================================================================ */
+   /* Centramos verticalmente la fila en pantallas pequeñas */
+   .row.justify-content-center {
+     min-height: 80vh;
+     align-items: center;
+   }
+   
+   /* Margen superior adicional para pantallas grandes */
+   @media (min-width: 992px) {
+     .mt-5 {
+       margin-top: 4rem !important;
+     }
+   }
+   
